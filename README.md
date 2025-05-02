@@ -2,6 +2,10 @@
 
 This project is a pixel-perfect implementation of a Figma design using React, Vite, and Tailwind CSS. It was built as part of an interview assessment, focusing on responsive design, clean code structure, and performance optimization.
 
+## 🚀 Live Demo
+
+[👉 Click here to view the deployed version](https://skatcher.vercel.app/)
+
 ---
 
 ## 🛠️ Technologies Used
