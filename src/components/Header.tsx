@@ -101,6 +101,7 @@ const Header = () => {
 								href={nav.href}
 								aria-label={nav.ariaLabel}
 								title={nav.ariaLabel}
+								onClick={() => isMenuOpen && toggleMenu()}
 								className="transition-colors hover:text-amberDark active:text-amberDark"
 							>
 								{nav.label}
