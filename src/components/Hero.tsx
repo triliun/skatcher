@@ -2,23 +2,16 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import realEstate1 from "/real-estate-4.jpg?url";
 import realEstate2 from "/real-estate-3.jpg?url";
 import realEstate3 from "/real-estate-2.jpg?url";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ImageLink } from "../types/types";
 import clsx from "clsx";
 
+const SCROLL_AMOUNT = 300;
+
 const imageUrl: ImageLink[] = [
-	{
-		src: realEstate1,
-		label: "real estated img",
-	},
-	{
-		src: realEstate2,
-		label: "real estated img",
-	},
-	{
-		src: realEstate3,
-		label: "real estated img",
-	},
+	{ src: realEstate1, label: "real estate image 1" },
+	{ src: realEstate2, label: "real estate image 2" },
+	{ src: realEstate3, label: "real estate image 3" },
 ];
 
 const Hero = () => {
@@ -26,33 +19,33 @@ const Hero = () => {
 	const [isAtStart, setIsAtStart] = useState(true);
 	const [isAtEnd, setIsAtEnd] = useState(false);
 
-	const updateScrollPosition = () => {
+	const updateScrollPosition = useCallback(() => {
 		if (!scrollRef.current) return;
 
 		const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
 		setIsAtStart(scrollLeft <= 0);
-		setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1); // -1 to handle rounding errors
-	};
+		setIsAtEnd(scrollLeft + clientWidth >= scrollWidth - 1);
+	}, []);
 
 	useEffect(() => {
 		const scrollContainer = scrollRef.current;
 		if (!scrollContainer) return;
 
 		scrollContainer.addEventListener("scroll", updateScrollPosition);
-		updateScrollPosition(); // initial check
+		updateScrollPosition();
 
 		return () => {
 			scrollContainer.removeEventListener("scroll", updateScrollPosition);
 		};
+	}, [updateScrollPosition]);
+
+	const scrollLeft = useCallback(() => {
+		scrollRef.current?.scrollBy({ left: -SCROLL_AMOUNT, behavior: "smooth" });
 	}, []);
 
-	const scrollLeft = () => {
-		scrollRef.current?.scrollBy({ left: -300, behavior: "smooth" });
-	};
-
-	const scrollRight = () => {
-		scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
-	};
+	const scrollRight = useCallback(() => {
+		scrollRef.current?.scrollBy({ left: SCROLL_AMOUNT, behavior: "smooth" });
+	}, []);
 
 	return (
 		<section id="home" className="flex flex-col items-center gap-16 w-full scroll-mt-20">
@@ -111,9 +104,9 @@ const Hero = () => {
 							ref={scrollRef}
 							className="flex overflow-x-auto overflow-w-hidden snap-x snap-center snap-mandatory w-full h-full rounded-xl"
 						>
-							{imageUrl.map((img) => (
+							{imageUrl.map((img, index) => (
 								<img
-									key={`hero-${img.src}`}
+									key={`hero-img-${index}`}
 									src={img.src}
 									width={425}
 									height={653}
