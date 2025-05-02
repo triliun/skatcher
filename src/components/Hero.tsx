@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import realEstate1 from "/real-estate-4.jpg?url";
 import realEstate2 from "/real-estate-3.jpg?url";
 import realEstate3 from "/real-estate-2.jpg?url";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ImageLink } from "../types/types";
 import clsx from "clsx";
 
@@ -46,13 +46,13 @@ const Hero = () => {
 		};
 	}, []);
 
-	const scrollLeft = useCallback(() => {
+	const scrollLeft = () => {
 		scrollRef.current?.scrollBy({ left: -300, behavior: "smooth" });
-	}, []);
+	};
 
-	const scrollRight = useCallback(() => {
+	const scrollRight = () => {
 		scrollRef.current?.scrollBy({ left: 300, behavior: "smooth" });
-	}, []);
+	};
 
 	return (
 		<section id="home" className="flex flex-col items-center gap-16 w-full scroll-mt-20">
@@ -64,13 +64,14 @@ const Hero = () => {
 						dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
 					</p>
 					<div className="flex flex-col md:flex-row gap-3 lg:max-w-sm">
-						<button
+						<a
 							type="button"
-							aria-label="Overview"
-							className="px-10 py-4 w-full rounded-md font-semibold transition-colors bg-amberDark hover:bg-amberDark/70"
+							aria-label="Go to Overview section"
+							href="#overview"
+							className="px-10 py-4 w-full text-center rounded-md font-semibold transition-colors bg-amberDark hover:bg-amberDark/70"
 						>
 							Overview
-						</button>
+						</a>
 						<button
 							type="button"
 							aria-label="Learn More"
